@@ -14,7 +14,13 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  name  String
-  email String  @unique
+  id         Int     @id @default(autoincrement())
+  name       String
+  fatherName String
+  motherName String?
+  phoneNo    String  @unique
+  email      String  @unique
+  password   String?
+  image      String?
+  status     Int?    @comment(1) // 1 = Active 0 = Inactive
 }
