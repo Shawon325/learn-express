@@ -1,8 +1,14 @@
 import prisma from '../../services/prisma/prisma';
 import logger from '../../services/logger/loggerService';
 import { success, error } from '../../helpers/apiResponse';
+import { validationResult } from 'express-validator';
+import * as bcrypt from 'bcryptjs';
 import {
-  HTTP_CREATED, HTTP_INTERNAL_SERVER_ERROR, HTTP_NO_CONTENT, HTTP_OK,
+  HTTP_CREATED,
+  HTTP_INTERNAL_SERVER_ERROR,
+  HTTP_NO_CONTENT,
+  HTTP_OK,
+  HTTP_VALIDATION_ERROR,
 } from '../../constants/statusCode';
 
 const index = async (request, response) => {
@@ -19,13 +25,29 @@ const index = async (request, response) => {
 
 const store = async (request, response) => {
   try {
+    const errors = validationResult(request);
+
+    if (!errors.isEmpty()) {
+      return response.status(HTTP_VALIDATION_ERROR).json({
+        errors: errors.array(),
+      });
+    }
+
     const {
       name, email, fatherName, motherName, image, password, phoneNo,
     } = request.body;
 
+    const encryptPassword = await bcrypt.hash(password, 10);
+
     const user = await prisma.user.create({
       data: {
-        name, email, fatherName, motherName, image, password, phoneNo,
+        name: name,
+        email: email,
+        fatherName: fatherName,
+        motherName: motherName,
+        image: image,
+        password: encryptPassword,
+        phoneNo: phoneNo,
       },
     });
 
@@ -57,18 +79,34 @@ const show = async (request, response) => {
 
 const update = async (request, response) => {
   try {
+    const errors = validationResult(request);
+
+    if (!errors.isEmpty()) {
+      return response.status(HTTP_VALIDATION_ERROR).json({
+        errors: errors.array(),
+      });
+    }
+
     const id = parseInt(request.params.id) || 0;
 
     const {
       name, email, fatherName, motherName, image, password, phoneNo,
     } = request.body;
 
+    const encryptPassword = await bcrypt.hash(password, 10);
+
     const user = await prisma.user.update({
       where: {
         id: id,
       },
       data: {
-        name, email, fatherName, motherName, image, password, phoneNo,
+        name: name,
+        email: email,
+        fatherName: fatherName,
+        motherName: motherName,
+        image: image,
+        password: encryptPassword,
+        phoneNo: phoneNo,
       },
     });
 
