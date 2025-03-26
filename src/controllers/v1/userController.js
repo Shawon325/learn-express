@@ -15,6 +15,8 @@ const index = async (request, response) => {
   try {
     const users = await prisma.user.findMany();
 
+    logger.info('Users data fetch successfully');
+
     return response.status(HTTP_OK).send(success(users, 'Users data fetch successfully', HTTP_OK));
   } catch (exception) {
     logger.error(`user-controller index : ${exception.message} `);
@@ -51,6 +53,8 @@ const store = async (request, response) => {
       },
     });
 
+    logger.info('User created successfully');
+
     return response.status(HTTP_CREATED).send(success(user, 'User created successfully', HTTP_CREATED));
   } catch (exception) {
     logger.error(`user-controller store : ${exception.message} `);
@@ -68,6 +72,8 @@ const show = async (request, response) => {
         id: id,
       },
     });
+
+    logger.info('User found successfully');
 
     return response.status(HTTP_OK).send(success(user, 'User found successfully', HTTP_OK));
   } catch (exception) {
@@ -110,6 +116,8 @@ const update = async (request, response) => {
       },
     });
 
+    logger.info('User updated successfully');
+
     return response.status(HTTP_CREATED).send(success(user, 'User updated successfully', HTTP_CREATED));
   } catch (exception) {
     logger.error(`user-controller update : ${exception.message} `);
@@ -127,6 +135,8 @@ const destroy = async (request, response) => {
         id: id,
       },
     });
+
+    logger.info('User deleted successfully');
 
     return response.status(HTTP_OK).send(success(user, 'User deleted successfully', HTTP_NO_CONTENT));
   } catch (exception) {
