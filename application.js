@@ -7,10 +7,11 @@ import httpLoggerService from './src/services/logger/httpLoggerService';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
+import bodyParser from 'body-parser';
+import fileUpload from 'express-fileupload';
 
-const bodyParser = require('body-parser');
-const fileUpload = require('express-fileupload');
 const application = express();
+
 config();
 
 const swaggerDefinition = {
