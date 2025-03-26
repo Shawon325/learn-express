@@ -1,9 +1,9 @@
-import prisma from '../services/prisma/prisma';
-import logger from '../services/logger/loggerService';
-import { success, error } from '../helpers/apiResponse';
+import prisma from '../../services/prisma/prisma';
+import logger from '../../services/logger/loggerService';
+import { success, error } from '../../helpers/apiResponse';
 import {
   HTTP_CREATED, HTTP_INTERNAL_SERVER_ERROR, HTTP_NO_CONTENT, HTTP_OK,
-} from '../constants/statusCode';
+} from '../../constants/statusCode';
 
 const index = async (request, response) => {
   try {
