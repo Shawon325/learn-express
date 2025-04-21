@@ -4,10 +4,8 @@ import { Router } from 'express';
 import * as userController from '../src/controllers/v1/userController';
 
 // From Requests
-import userRequestValidation
-  from '../src/formRequests/v1/user/userRequestValidation';
-import userUpdateRequestValidation
-  from '../src/formRequests/v1/user/userUpdateRequestValidation';
+import userRequestValidation from '../src/formRequests/v1/user/userRequestValidation';
+import userUpdateRequestValidation from '../src/formRequests/v1/user/userUpdateRequestValidation';
 
 const router = Router();
 
