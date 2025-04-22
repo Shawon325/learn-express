@@ -21,11 +21,7 @@ const userUpdateRequestValidation = () => {
           where: { email: value },
         });
 
-        if (
-          user !== null &&
-          'id' in user &&
-          user.id !== parseInt(req.params.id)
-        ) {
+        if (user !== null && user.id !== parseInt(req.params.id)) {
           throw new Error('Email already taken');
         }
       }),
@@ -55,11 +51,7 @@ const userUpdateRequestValidation = () => {
           where: { phoneNo: value },
         });
 
-        if (
-          user !== null &&
-          'id' in user &&
-          user.id !== parseInt(req.params.id)
-        ) {
+        if (user !== null && user.id !== parseInt(req.params.id)) {
           throw new Error('Phone Number already taken');
         }
       }),
