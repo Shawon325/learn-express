@@ -9,7 +9,7 @@ import userUpdateRequestValidation from '../src/formRequests/v1/user/userUpdateR
 
 const router = Router();
 
-router.get('/', (req, res) => {
+router.get('/', (_, res) => {
   res.send('Hello, Express!');
 });
 

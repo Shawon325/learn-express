@@ -11,7 +11,7 @@ import {
   HTTP_VALIDATION_ERROR,
 } from '../../constants/statusCode';
 
-const index = async (request, response) => {
+const index = async (_, response) => {
   try {
     const users = await prisma.user.findMany();
 
@@ -39,19 +39,27 @@ const store = async (request, response) => {
       });
     }
 
-    const requestData = request.body;
+    const {
+      name,
+      email,
+      fatherName,
+      motherName,
+      image,
+      password,
+      phoneNo,
+    } = request.body;
 
-    const encryptPassword = await bcrypt.hash(requestData.password, 10);
+    const encryptPassword = await bcrypt.hash(password, 10);
 
     const user = await prisma.user.create({
       data: {
-        name: requestData.name,
-        email: requestData.email,
-        fatherName: requestData.fatherName,
-        motherName: requestData.motherName,
-        image: requestData.image,
+        name: name,
+        email: email,
+        fatherName: fatherName,
+        motherName: motherName,
+        image: image,
         password: encryptPassword,
-        phoneNo: requestData.phoneNo,
+        phoneNo: phoneNo,
       },
     });
 
@@ -105,22 +113,29 @@ const update = async (request, response) => {
 
     const id = parseInt(request.params.id) || 0;
 
-    const requestData = request.body;
+    const {
+      name,
+      email,
+      fatherName,
+      motherName,
+      image,
+      password,
+      phoneNo,
+    } = request.body;
 
-    const encryptPassword = await bcrypt.hash(requestData.password, 10);
+    const encryptPassword = await bcrypt.hash(password, 10);
 
     const user = await prisma.user.update({
       where: {
         id: id,
-      },
-      data: {
-        name: requestData.name,
-        email: requestData.email,
-        fatherName: requestData.fatherName,
-        motherName: requestData.motherName,
-        image: requestData.image,
+      }, data: {
+        name: name,
+        email: email,
+        fatherName: fatherName,
+        motherName: motherName,
+        image: image,
         password: encryptPassword,
-        phoneNo: requestData.phoneNo,
+        phoneNo: phoneNo,
       },
     });
 
