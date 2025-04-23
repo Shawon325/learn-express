@@ -16,9 +16,9 @@ datasource db {
 model User {
   id         Int     @id @default(autoincrement())
   name       String
-  fatherName String
+  fatherName String?
   motherName String?
-  phoneNo    String  @unique
+  phoneNo    String? @unique
   email      String  @unique
   password   String?
   image      String?

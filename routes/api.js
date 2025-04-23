@@ -14,6 +14,7 @@ router.get('/', (_, res) => {
 });
 
 router.post('/login', authController.login);
+router.post('/register', authController.register);
 
 router.get('/users', userController.index);
 router.post('/users', userRequestValidation(), userController.store);
