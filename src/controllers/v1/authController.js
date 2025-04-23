@@ -3,7 +3,7 @@ import logger from '../../services/logger/loggerService';
 import { success, error } from '../../helpers/apiResponse';
 import { validationResult } from 'express-validator';
 import * as bcrypt from 'bcryptjs';
-import { signToken } from '../../helpers/jwt';
+import { generateToken } from '../../helpers/jwt';
 import {
   HTTP_OK,
   HTTP_VALIDATION_ERROR,
@@ -45,7 +45,7 @@ const login = async (request, response) => {
       return response.status(HTTP_UNAUTHORIZED).send(error('Invalid password'));
     }
 
-    const token = signToken(user.id, email);
+    const token = generateToken(user.id, email);
 
     delete user.password;
 

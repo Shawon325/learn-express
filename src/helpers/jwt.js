@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const signToken = (id, email) => {
+const generateToken = (id, email) => {
   let payload = {
     id: id,
     email: email,
@@ -17,4 +17,4 @@ const signToken = (id, email) => {
   );
 };
 
-export { signToken };
+export { generateToken };
