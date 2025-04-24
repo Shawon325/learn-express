@@ -1,5 +1,7 @@
 import { Router } from 'express';
 
+// Middlewares
+import authMiddleware from '../src/middlewares/authMiddleware';
 // Controllers
 import * as userController from '../src/controllers/v1/userController';
 import * as authController from '../src/controllers/v1/authController';
@@ -17,6 +19,8 @@ router.get('/', (_, res) => {
 
 router.post('/login', loginRequestValidation(), authController.login);
 router.post('/register', registerRequestValidation(), authController.register);
+
+router.use(authMiddleware);
 
 router.get('/users', userController.index);
 router.post('/users', userRequestValidation(), userController.store);
