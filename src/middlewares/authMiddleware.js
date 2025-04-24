@@ -22,7 +22,9 @@ const authMiddleware = (request, response, next) => {
   } catch (exception) {
     logger.error(`auth-middleware : ${exception.message} `);
 
-    return response.status(HTTP_INTERNAL_SERVER_ERROR).json(error(exception.message));
+    return response
+      .status(HTTP_INTERNAL_SERVER_ERROR)
+      .json(error(exception.message));
   }
 };
 
