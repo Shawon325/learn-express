@@ -12,6 +12,53 @@ import {
   HTTP_INTERNAL_SERVER_ERROR,
 } from '../../constants/statusCode';
 
+const register = async (request, response) => {
+  try {
+    const errors = validationResult(request);
+
+    if (!errors.isEmpty()) {
+      return response
+        .status(HTTP_VALIDATION_ERROR)
+        .json({
+          errors: errors.array(),
+        });
+    }
+
+    const {
+      name,
+      email,
+      password,
+    } = request.body;
+
+    const encryptPassword = await bcrypt.hash(password, 10);
+
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: encryptPassword,
+      },
+    });
+
+    const token = generateToken(user.id, email);
+
+    delete user.password;
+
+    logger.info('Registration successful');
+
+    return response.status(HTTP_OK).send(success({
+      user: user,
+      token: token,
+    }, 'Registration successful'));
+  } catch (exception) {
+    logger.error(`auth-controller register : ${exception.message} `);
+
+    return response
+      .status(HTTP_INTERNAL_SERVER_ERROR)
+      .send(error(exception.message));
+  }
+}
+
 const login = async (request, response) => {
   try {
     const errors = validationResult(request);
@@ -64,51 +111,4 @@ const login = async (request, response) => {
   }
 }
 
-const register = async (request, response) => {
-  try {
-    const errors = validationResult(request);
-
-    if (!errors.isEmpty()) {
-      return response
-        .status(HTTP_VALIDATION_ERROR)
-        .json({
-          errors: errors.array(),
-        });
-    }
-
-    const {
-      name,
-      email,
-      password,
-    } = request.body;
-
-    const encryptPassword = await bcrypt.hash(password, 10);
-
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        password: encryptPassword,
-      },
-    });
-
-    const token = generateToken(user.id, email);
-
-    delete user.password;
-
-    logger.info('Registration successful');
-
-    return response.status(HTTP_OK).send(success({
-      user: user,
-      token: token,
-    }, 'Registration successful'));
-  } catch (exception) {
-    logger.error(`auth-controller register : ${exception.message} `);
-
-    return response
-      .status(HTTP_INTERNAL_SERVER_ERROR)
-      .send(error(exception.message));
-  }
-}
-
-export { login, register };
+export { register, login };

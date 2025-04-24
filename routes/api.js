@@ -6,6 +6,8 @@ import * as authController from '../src/controllers/v1/authController';
 // From Requests
 import userRequestValidation from '../src/formRequests/v1/user/userRequestValidation';
 import userUpdateRequestValidation from '../src/formRequests/v1/user/userUpdateRequestValidation';
+import registerRequestValidation from '../src/formRequests/v1/auth/registerRequestValidation';
+import loginRequestValidation from '../src/formRequests/v1/auth/loginRequestValidation';
 
 const router = Router();
 
@@ -13,8 +15,8 @@ router.get('/', (_, res) => {
   res.send('Hello, Express!');
 });
 
-router.post('/login', authController.login);
-router.post('/register', authController.register);
+router.post('/login', loginRequestValidation(), authController.login);
+router.post('/register', registerRequestValidation(), authController.register);
 
 router.get('/users', userController.index);
 router.post('/users', userRequestValidation(), userController.store);
