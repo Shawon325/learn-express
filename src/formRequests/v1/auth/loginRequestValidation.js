@@ -17,4 +17,4 @@ const loginRequestValidation = () => {
   ];
 };
 
-export default loginRequestValidation; 
+export default loginRequestValidation;
