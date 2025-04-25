@@ -37,6 +37,6 @@ application.use(express.json());
 application.use(express.urlencoded({ extended: true }));
 application.use(cookieParser());
 application.use(cors());
-application.use('/api/v1', router);
+application.use('/', router);
 application.use(fileUpload());
 export default application;
