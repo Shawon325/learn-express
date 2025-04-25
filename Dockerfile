@@ -1,10 +1,6 @@
-# Stage 1: Build
-FROM node:23-slim AS build
+FROM node:23-slim
 
-ARG user
-ARG uid
-
-# Install build dependencies
+# Install ALL dependencies
 RUN apt-get update && \
     apt-get install -y \
     curl \
@@ -15,29 +11,16 @@ RUN apt-get update && \
 
 WORKDIR /var/www/html
 
+# Copy package files
 COPY package*.json .
 COPY prisma/schema.prisma ./prisma/
 
+# Install dependencies and generate Prisma client
 RUN npm install
-
 RUN npx prisma generate
 
+# Copy app files
 COPY . .
-
-# Stage 2: Production
-FROM node:23-slim
-
-# Install runtime dependencies
-RUN apt-get update && \
-    apt-get install -y \
-    openssl && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-WORKDIR /var/www/html
-
-# Copy only the necessary files from the build stage
-COPY --from=build /var/www/html /var/www/html
 
 EXPOSE 8888
 
