@@ -1,0 +1,13 @@
+# OS files
+.DS_Store
+
+#Version control
+.git
+.gitignore
+
+# IDE and Editor files
+.vscode
+.idea
+
+# Dependency directory
+node_modules
