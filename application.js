@@ -7,7 +7,6 @@ import httpLoggerService from './src/services/logger/httpLoggerService';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
-import bodyParser from 'body-parser';
 import fileUpload from 'express-fileupload';
 
 const application = express();
@@ -28,7 +27,8 @@ const options = {
 };
 
 const swaggerSpec = swaggerJSDoc(options);
-application.use(bodyParser({ extended: false }));
+application.use(express.urlencoded({ extended: false }));
+application.use(express.json());
 application.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 application.use(logger('dev'));
 application.use(express.static('public'));
@@ -37,6 +37,7 @@ application.use(express.json());
 application.use(express.urlencoded({ extended: true }));
 application.use(cookieParser());
 application.use(cors());
-application.use('/', router);
+application.use('/api/v1', router);
 application.use(fileUpload());
+
 export default application;

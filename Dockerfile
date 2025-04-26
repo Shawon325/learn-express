@@ -1,13 +1,13 @@
-FROM node:23-slim
+FROM node:22
 
 # Install ALL dependencies
-RUN apt-get update && \
-    apt-get install -y \
-    curl \
-    openssl \
-    libssl-dev && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && \
+#     apt-get install -y \
+#     curl \
+#     openssl \
+#     libssl-dev && \
+#     apt-get clean && \
+#     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www/html
 
