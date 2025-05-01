@@ -46,7 +46,7 @@ const register = async (request, response) => {
 
     logger.info('Registration successful');
 
-    return response.status(HTTP_OK).send(success({
+    return response.status(HTTP_CREATED).send(success({
       user: user,
       token: token,
     }, 'Registration successful'));
