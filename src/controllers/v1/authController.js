@@ -6,6 +6,7 @@ import * as bcrypt from 'bcryptjs';
 import { generateToken } from '../../helpers/jwt';
 import {
   HTTP_OK,
+  HTTP_CREATED,
   HTTP_VALIDATION_ERROR,
   HTTP_NOT_FOUND,
   HTTP_UNAUTHORIZED,
